@@ -2,49 +2,60 @@ import React, { useState } from 'react';
 
 const ImageUploadSection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [result, setResult] = useState(null);  // State to store the result
-  const [processedImage, setProcessedImage] = useState(null);  // State to store the processed image
-  const [loading, setLoading] = useState(false);  // State for loading indicator
-  const [error, setError] = useState(null);  // State to handle errors
+  const [result, setResult] = useState(null);
+  const [processedImage, setProcessedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [selectedAudio, setSelectedAudio] = useState(null);
+  const [audioPreview, setAudioPreview] = useState(null); // State for audio playback
+  const [audioResult, setAudioResult] = useState(null);
+  const [audioLoading, setAudioLoading] = useState(false);
+  const [audioError, setAudioError] = useState(null);
 
   const handleImageChange = (event) => {
     setSelectedImage(event.target.files[0]);
-    setProcessedImage(null);  // Reset processed image when a new image is selected
-    setResult(null);  // Reset results when a new image is selected
-    setError(null);  // Reset any previous errors
+    setProcessedImage(null);
+    setResult(null);
+    setError(null);
+  };
+
+  const handleAudioChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("audio/")) {
+      setSelectedAudio(file);
+      setAudioResult(null);
+      setAudioError(null);
+      // Create an object URL for the uploaded audio file
+      setAudioPreview(URL.createObjectURL(file));
+    } else {
+      alert("Please upload a valid audio file.");
+    }
   };
 
   const handleSubmit = async () => {
     if (selectedImage) {
       alert(`Image ${selectedImage.name} will be processed!`);
       setLoading(true);
-      setError(null);  // Reset any errors before submitting
+      setError(null);
 
-      // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64String = reader.result.split(',')[1]; // Get the base64 string without the metadata
+        const base64String = reader.result.split(',')[1];
 
-        // Send the base64 string to the Flask backend
         try {
           const response = await fetch('http://127.0.0.1:5000/api/process-image', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              image: base64String, // Send the base64 string
-            }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: base64String }),
           });
 
           const result = await response.json();
           if (result.status === 'success') {
-            setResult(result.results);  // Set the result in state
-            setProcessedImage(result.image);  // Set the processed image
+            setResult(result.results);
+            setProcessedImage(result.image);
           } else {
-            setError(result.message);  // Set error message if processing fails
+            setError(result.message);
           }
-
         } catch (error) {
           console.error('Error processing image:', error);
           setError('There was an error processing the image.');
@@ -53,15 +64,45 @@ const ImageUploadSection = () => {
         }
       };
 
-      // Read the file as a Data URL (base64)
       reader.readAsDataURL(selectedImage);
     } else {
-      alert("Please select an image first.");
+      alert('Please select an image first.');
+    }
+  };
+
+  const handleAudioSubmit = async () => {
+    if (selectedAudio) {
+      alert(`Audio ${selectedAudio.name} will be processed!`);
+      setAudioLoading(true);
+      setAudioError(null);
+
+      const formData = new FormData();
+      formData.append('audio', selectedAudio);
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/process-audio', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+          setAudioResult(result.results);
+        } else {
+          setAudioError(result.message);
+        }
+      } catch (error) {
+        console.error('Error processing audio:', error);
+        setAudioError('There was an error processing the audio file.');
+      } finally {
+        setAudioLoading(false);
+      }
+    } else {
+      alert('Please select an audio file first.');
     }
   };
 
   const formatDescription = (shape, description) => {
-    // Replace newlines with spaces and trim leading/trailing spaces
     return `${shape} - ${description.replace(/\n/g, ' ').trim()}`;
   };
 
@@ -78,7 +119,7 @@ const ImageUploadSection = () => {
         <button
           onClick={handleSubmit}
           className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
-          disabled={loading}  // Disable button while processing
+          disabled={loading}
         >
           {loading ? 'Processing...' : 'Process Image'}
         </button>
@@ -110,7 +151,7 @@ const ImageUploadSection = () => {
         {result && !error && (
           <div className="mt-8 bg-gray-900 text-white p-6 rounded shadow-lg max-w-6xl">
             <h3 className="font-semibold text-center text-lg mb-4">AI Analysis Result:</h3>
-            <div className="flex flex-col items-center"> {/* Center align results */}
+            <div className="flex flex-col items-center">
               <span className="text-center">
                 <strong>Eye Shape:</strong> {formatDescription(result.eye.shape, result.eye.description)}
               </span>
@@ -127,6 +168,45 @@ const ImageUploadSection = () => {
                 <strong>Nose Shape:</strong> {formatDescription(result.nose.shape, result.nose.description)}
               </span>
             </div>
+          </div>
+        )}
+      </div>
+      <div className="mt-8 flex flex-col items-center">
+        <h2 className="text-3xl font-bold mb-6 text-center text-white">Upload Your Audio for AI Processing</h2>
+        <input
+          type="file"
+          accept="audio/*"
+          onChange={handleAudioChange}
+          className="mb-4 p-2 border rounded text-white bg-gray-800"
+        />
+        {audioPreview && (
+          <div className="mt-4">
+            <h3 className="font-semibold text-center text-white text-lg">Audio Playback:</h3>
+            <audio controls src={audioPreview} className="mt-2"></audio>
+          </div>
+        )}
+        <button
+          onClick={handleAudioSubmit}
+          className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition"
+          disabled={audioLoading}
+        >
+          {audioLoading ? 'Processing Audio...' : 'Process Audio'}
+        </button>
+        {audioError && (
+          <div className="mt-4 bg-red-500 text-white p-4 rounded">
+            <p>Error: {audioError}</p>
+          </div>
+        )}
+        {audioResult && !audioError && (
+          <div className="mt-8 bg-gray-900 text-white p-6 rounded shadow-lg max-w-6xl">
+            <h3 className="font-semibold text-center text-lg mb-4">AI Audio Analysis Result:</h3>
+            <ul className="text-center">
+              {Object.entries(audioResult).map(([trait, score]) => (
+                <li key={trait} className="mb-2">
+                  <strong>{trait}:</strong> {score}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
