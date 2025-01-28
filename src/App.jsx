@@ -8,7 +8,8 @@ import Pricing from "./components/Pricing";
 import Roadmap from "./components/Roadmap";
 import Services from "./components/Services";
 import ImageUpload from "./components/ImageUpload";
-
+import Zodiac from "./components/design/zodiac";
+import Individual from "./components/design/individual";
 const App = () => {
   return (
     <>
@@ -17,6 +18,7 @@ const App = () => {
         <Hero />
         <Collaboration />
         <ImageUpload />
+        <Zodiac />
         <Roadmap />
         <Benefits />
         <Footer />

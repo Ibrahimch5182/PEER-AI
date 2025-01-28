@@ -1,0 +1,199 @@
+{
+    "zodiac_signs": [
+      {
+        "name": "Aries",
+        "date_range": {"start": "03-21", "end": "04-19"},
+        "traits": ["Courageous", "Confident", "Dynamic"],
+        "element": "Fire",
+        "symbol": "Ram",
+        "description": "Aries is known for its energetic and assertive nature."
+      },
+      {
+        "name": "Taurus",
+        "date_range": {"start": "04-20", "end": "05-20"},
+        "traits": ["Reliable", "Patient", "Practical"],
+        "element": "Earth",
+        "symbol": "Bull",
+        "description": "Taurus is known for being reliable and down-to-earth."
+      },
+      {
+        "name": "Gemini",
+        "date_range": {"start": "05-21", "end": "06-20"},
+        "traits": ["Adaptable", "Outgoing", "Intelligent"],
+        "element": "Air",
+        "symbol": "Twins",
+        "description": "Geminis are known for their dual nature and versatility."
+      },
+      {
+        "name": "Cancer",
+        "date_range": {"start": "06-21", "end": "07-22"},
+        "traits": ["Emotional", "Intuitive", "Caring"],
+        "element": "Water",
+        "symbol": "Crab",
+        "description": "Cancer is deeply emotional and empathetic."
+      },
+      {
+        "name": "Leo",
+        "date_range": {"start": "07-23", "end": "08-22"},
+        "traits": ["Confident", "Charismatic", "Creative"],
+        "element": "Fire",
+        "symbol": "Lion",
+        "description": "Leos are natural leaders with a flair for the dramatic."
+      },
+      {
+        "name": "Virgo",
+        "date_range": {"start": "08-23", "end": "09-22"},
+        "traits": ["Analytical", "Practical", "Loyal"],
+        "element": "Earth",
+        "symbol": "Maiden",
+        "description": "Virgos are known for their attention to detail and practical nature."
+      },
+      {
+        "name": "Libra",
+        "date_range": {"start": "09-23", "end": "10-22"},
+        "traits": ["Charming", "Fair-minded", "Diplomatic"],
+        "element": "Air",
+        "symbol": "Scales",
+        "description": "Libras value balance, harmony, and fairness in their lives."
+      },
+      {
+        "name": "Scorpio",
+        "date_range": {"start": "10-23", "end": "11-21"},
+        "traits": ["Passionate", "Determined", "Resilient"],
+        "element": "Water",
+        "symbol": "Scorpion",
+        "description": "Scorpios are intense and determined individuals."
+      },
+      {
+        "name": "Sagittarius",
+        "date_range": {"start": "11-22", "end": "12-21"},
+        "traits": ["Adventurous", "Optimistic", "Independent"],
+        "element": "Fire",
+        "symbol": "Archer",
+        "description": "Sagittarius is known for its adventurous and free-spirited nature."
+      },
+      {
+        "name": "Capricorn",
+        "date_range": {"start": "12-22", "end": "01-19"},
+        "traits": ["Ambitious", "Disciplined", "Pragmatic"],
+        "element": "Earth",
+        "symbol": "Goat",
+        "description": "Capricorns are hardworking and highly disciplined."
+      },
+      {
+        "name": "Aquarius",
+        "date_range": {"start": "01-20", "end": "02-18"},
+        "traits": ["Innovative", "Independent", "Humanitarian"],
+        "element": "Air",
+        "symbol": "Water Bearer",
+        "description": "Aquarius is known for its innovative and forward-thinking nature."
+      },
+      {
+        "name": "Pisces",
+        "date_range": {"start": "02-19", "end": "03-20"},
+        "traits": ["Compassionate", "Imaginative", "Intuitive"],
+        "element": "Water",
+        "symbol": "Fish",
+        "description": "Pisces are deeply empathetic and intuitive individuals."
+      }
+    ],
+    "chinese_signs": [
+      {
+        "name": "Rat",
+        "years": [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020],
+        "traits": ["Quick-witted", "Resourceful", "Versatile"],
+        "element": "Water",
+        "symbol": "鼠",
+        "description": "Rats are known for their intelligence and adaptability."
+      },
+      {
+        "name": "Ox",
+        "years": [1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021],
+        "traits": ["Hardworking", "Reliable", "Calm"],
+        "element": "Earth",
+        "symbol": "牛",
+        "description": "The Ox represents diligence and dependability."
+      },
+      {
+        "name": "Tiger",
+        "years": [1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022],
+        "traits": ["Brave", "Competitive", "Charming"],
+        "element": "Wood",
+        "symbol": "虎",
+        "description": "Tigers are known for their courage and strong personality."
+      },
+      {
+        "name": "Rabbit",
+        "years": [1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023],
+        "traits": ["Gentle", "Sensitive", "Compassionate"],
+        "element": "Wood",
+        "symbol": "兔",
+        "description": "Rabbits are known for their calm and gentle nature."
+      },
+      {
+        "name": "Dragon",
+        "years": [1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024],
+        "traits": ["Confident", "Ambitious", "Energetic"],
+        "element": "Earth",
+        "symbol": "龙",
+        "description": "Dragons are charismatic and full of vitality."
+      },
+      {
+        "name": "Snake",
+        "years": [1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025],
+        "traits": ["Wise", "Elegant", "Mysterious"],
+        "element": "Fire",
+        "symbol": "蛇",
+        "description": "Snakes are known for their intelligence and calm demeanor."
+      },
+      {
+        "name": "Horse",
+        "years": [1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026],
+        "traits": ["Energetic", "Independent", "Optimistic"],
+        "element": "Fire",
+        "symbol": "马",
+        "description": "Horses are spirited and love freedom."
+      },
+      {
+        "name": "Goat",
+        "years": [1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027],
+        "traits": ["Gentle", "Artistic", "Compassionate"],
+        "element": "Earth",
+        "symbol": "羊",
+        "description": "Goats are creative and kind-hearted."
+      },
+      {
+        "name": "Monkey",
+        "years": [1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028],
+        "traits": ["Witty", "Clever", "Adventurous"],
+        "element": "Metal",
+        "symbol": "猴",
+        "description": "Monkeys are curious and intelligent."
+      },
+      {
+        "name": "Rooster",
+        "years": [1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029],
+        "traits": ["Hardworking", "Honest", "Confident"],
+        "element": "Metal",
+        "symbol": "鸡",
+        "description": "Roosters are diligent and ambitious."
+      },
+      {
+        "name": "Dog",
+        "years": [1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030],
+        "traits": ["Loyal", "Friendly", "Responsible"],
+        "element": "Earth",
+        "symbol": "狗",
+        "description": "Dogs are trustworthy and dependable."
+      },
+      {
+        "name": "Pig",
+        "years": [1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031],
+        "traits": ["Generous", "Compassionate", "Diligent"],
+        "element": "Water",
+        "symbol": "猪",
+        "description": "Pigs are kind-hearted and hardworking."
+      }
+    ]
+  }
+  
