@@ -876,3 +876,8 @@ And if you're hungry for more than just a course and want to understand how we l
 </a>
 
 #
+
+## Credits
+
+This project is based on [Brainwave](https://github.com/adrianhajdin/brainwave) by [Adrian Hajdin](https://github.com/adrianhajdin), with significant modifications for my own use case.
+
