@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { background } from "../../assets";
 
 export const Rings = () => {
@@ -47,5 +48,23 @@ export const HamburgerMenu = () => {
 
       <BackgroundCircles />
     </div>
+  );
+};
+
+export const Header = () => {
+  return (
+    <header className="fixed top-0 left-0 w-full bg-n-8/90 backdrop-blur-sm z-50">
+      <div className="container mx-auto flex justify-between items-center p-4">
+        <div className="text-2xl font-bold text-white">Karma Personality</div>
+        <nav className="hidden lg:flex space-x-8">
+          <Link to="/signup" className="text-n-1 hover:text-n-4 transition-colors">
+            New Account
+          </Link>
+          <Link to="/login" className="text-n-1 hover:text-n-4 transition-colors">
+            Sign In
+          </Link>
+        </nav>
+      </div>
+    </header>
   );
 };
