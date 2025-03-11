@@ -34,8 +34,6 @@ const App = () => {
               <CVUpload />
               <Roadmap />
               <Benefits />
-              <Services />
-              <Pricing />
               <Footer />
             </>
           } />
