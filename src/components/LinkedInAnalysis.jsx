@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LinkedInAnalysis = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [profileUrl, setProfileUrl] = useState('');
   const [jobPreferences, setJobPreferences] = useState('');
   const [analysis, setAnalysis] = useState(null);
@@ -23,6 +28,11 @@ const LinkedInAnalysis = () => {
   };
 
   const handleSubmit = async () => {
+    if (!user) {
+      alert("You must be logged in to use this feature.");
+      return navigate("/login");
+    }
+
     if (!profileUrl) {
       alert('Please enter a LinkedIn profile URL.');
       return;
@@ -56,6 +66,11 @@ const LinkedInAnalysis = () => {
   };
 
   const handleFollowUpSubmit = async () => {
+    if (!user) {
+      alert("You must be logged in to use this feature.");
+      return navigate("/login");
+    }
+
     if (!followUpInput) {
       alert('Please enter a follow-up question.');
       return;

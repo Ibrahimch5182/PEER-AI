@@ -48,8 +48,93 @@ import logging
 logging.getLogger("pdfminer").setLevel(logging.WARNING)  # Suppress debug logs
 
 
+from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS
+
+
+app.config['SECRET_KEY'] = 'your_secret_key_here'
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key_here'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+jwt = JWTManager(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120))
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+
+with app.app_context():
+    db.create_all()
+
+
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+
+    if not name or not email or not password:
+        return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({'status': 'error', 'message': 'Email already registered'}), 409
+
+    hashed_password = generate_password_hash(password)
+    new_user = User(name=name, email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'status': 'success', 'message': 'User registered successfully'}), 201
+
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+
+    if not name or not email or not password:
+        return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({'status': 'error', 'message': 'Email already registered'}), 409
+
+    hashed_password = generate_password_hash(password)
+    new_user = User(name=name, email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'status': 'success', 'message': 'User registered successfully'}), 201
+
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({'status': 'error', 'message': 'Invalid credentials'}), 401
+
+    access_token = create_access_token(identity=user.id)
+
+    return jsonify({'status': 'success', 'access_token': access_token}), 200
+
 
 ################################################################
 

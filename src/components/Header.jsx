@@ -1,23 +1,22 @@
-import { useLocation, Link, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import { brainwave } from "../assets";
 import { navigation } from "../constants";
 import Button from "./Button";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { HamburgerMenu } from "./design/Header";
-import { useState } from "react";
+import { AuthContext } from "../AuthContext";
 
 const Header = () => {
   const pathname = useLocation();
-  const navigate = useNavigate(); // ✅ Define useNavigate inside the component
+  const navigate = useNavigate();
   const [openNavigation, setOpenNavigation] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
-  const toggleNavigation = () => {
-    setOpenNavigation((prev) => !prev);
-  };
+  const toggleNavigation = () => setOpenNavigation((prev) => !prev);
 
   const handleClick = () => {
-    if (!openNavigation) return;
-    setOpenNavigation(false);
+    if (openNavigation) setOpenNavigation(false);
   };
 
   return (
@@ -54,20 +53,30 @@ const Header = () => {
               </Link>
             ))}
           </div>
-
           <HamburgerMenu />
         </nav>
 
-        <Link
-          to="/signup"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-          New account
-        </Link>
+        {user ? (
+          <div className="hidden lg:flex items-center gap-4 text-sm">
+            <span className="text-n-1/80">{user.displayName || user.email}</span>
+            <Button onClick={logout} className="bg-red-500 text-white hover:opacity-90">
+              Logout
+            </Button>
+          </div>
+        ) : (
+          <>
+            <Link
+              to="/signup"
+              className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+            >
+              New account
+            </Link>
 
-        <Button className="hidden lg:flex" onClick={() => navigate("/login")}>
-          Sign in
-        </Button>
+            <Button className="hidden lg:flex" onClick={() => navigate("/login")}>
+              Sign in
+            </Button>
+          </>
+        )}
 
         <Button
           className="ml-auto lg:hidden"
